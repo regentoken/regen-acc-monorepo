@@ -1,76 +1,139 @@
 ---
 import Base from "../layouts/Base.astro";
+import Navbar from "../components/Navbar.astro";
 import Section from "../components/Section.astro";
+import Card from "../components/Card.astro";
+import Button from "../components/Button.astro";
+import RevealTeaser from "../components/RevealTeaser.astro";
 
-// NOTE: copy below is STRUCTURAL PLACEHOLDER (design doc T3/T4 — written with
-// the founder). It respects the locked word-choice constraints already:
-//   - no "capital / funding / grants / investment" language
-//   - no NDA names (Biobadamex / Zamora / SER / CMR)
-//   - no Token Dad branding
-// Fill each block with real copy; keep the constraints.
+// DRAFT landing surface (RGA-003/T3/T4 copy still placeholder-ish, but the
+// STRUCTURE is now v1-shaped: navbar, logo, hero with primary-red CTAs, cards,
+// the reveal moment, footer). Word-choice constraints hold:
+//   no capital/funding/grants/investment · no NDA names · no Token Dad.
+// Voice: regen/acc + regenmaxxing, mushroom-mycelial, playful-but-credible.
 ---
 
 <Base title="Request for Regens — Regen Accelerator">
+  <Navbar />
+
+  <!-- HERO -->
   <header class="hero">
-    <div class="container">
-      <p class="kicker">Regen Accelerator</p>
-      <h1>Request for <span class="headline-italic">Regens</span></h1>
-      <p class="lede prose">
-        Learn to build regeneration with AI. Real tools, real guidance, and a
-        public record of what gets built — for builders, impact projects, and
-        founders who need help getting from idea to shipped.
-      </p>
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <p class="kicker">regen/acc · regenmaxxing</p>
+        <h1>
+          Request for <span class="headline-italic">Regens</span>
+        </h1>
+        <p class="lede prose">
+          Learn to build regeneration with AI. Real tools, real guidance, and a
+          public record of what gets built — for builders, impact projects, and
+          founders who need help getting from idea to shipped.
+        </p>
+        <div class="cta-row">
+          <Button href="#cases" size="lg">See the proof</Button>
+          <Button href="#what" size="lg" variant="outline">How it works</Button>
+        </div>
+        <p class="tagline">Regenerating frontier tech to make life more human.</p>
+      </div>
+      <div class="hero-art">
+        <img src="/logos/reggie.svg" alt="Reggie — a regenerative mushroom" width="220" height="220" />
+      </div>
     </div>
   </header>
 
+  <!-- WHAT THIS IS -->
   <Section id="what" kicker="What this is" title="A learning surface, not an application form">
-    <p>
-      [PLACEHOLDER — T4] Teach-first, in the open. This is where you learn how
-      the work actually gets done: the tools, the process, the decisions. Not a
-      form to fill out, not a queue to wait in — a place to learn from real
-      builds that already shipped.
+    <p class="prose">
+      [DRAFT — T4] Teach-first, in the open. This is where you learn how the work
+      actually gets done — the tools, the process, the calls that matter. Not a
+      form to fill out, not a queue to wait in. A place to learn from real builds
+      that already shipped, and to regenmaxx: use AI the way the best builders do,
+      pointed at things that make life more human.
     </p>
   </Section>
 
-  <Section id="dnai" kicker="Proof · Case 01" title="DNAI — a builder agent that ships">
-    <p>
-      [PLACEHOLDER — T4] DNAI is the builder agent behind real, published work.
-      Cite the public artifacts and the preprint (DOI
-      <code>10.55277/researchhub.eoe1iia0.1</code>) here. Public-safe only.
-    </p>
-  </Section>
-
-  <Section id="caregiver" kicker="Proof · Case 02" title="A caregiver surface, built by a learner">
-    <p>
-      [PLACEHOLDER — T4] Someone learning with these tools is building a
-      caregiver-coordination surface — managing overwhelming care instructions
-      and coordinating one patient's care across several caregivers. Tell that
-      story here.
-    </p>
-  </Section>
-
-  <Section id="roadmap" kicker="What's next" title="Where this goes">
-    <p>
-      [PLACEHOLDER — T4] Name the direction without promising specific
-      technology or timelines: per-project agents you can spin up on demand, a
-      way to track what's being built. Coming, not live.
-    </p>
-  </Section>
-
-  <footer class="site-footer">
+  <!-- CASES (cards) -->
+  <section id="cases" class="section">
     <div class="container">
-      <p>Regen Accelerator · voiced by Reggie</p>
+      <p class="kicker center">Proof</p>
+      <h2 class="cases-title">Real builds, already shipped</h2>
+      <div class="card-grid">
+        <Card kicker="Case 01" title="DNAI — a builder agent that ships">
+          <p>
+            [DRAFT — T4] DNAI is the builder agent behind real, published work.
+            Cite the public artifacts and the preprint (DOI
+            <code>10.55277/researchhub.eoe1iia0.1</code>). Public-safe only.
+          </p>
+        </Card>
+        <Card kicker="Case 02" title="A caregiver surface, built by a learner">
+          <p>
+            [DRAFT — T4] Someone learning with these tools is building a
+            caregiver-coordination surface — taming overwhelming care
+            instructions and coordinating one patient's care across several
+            caregivers. Tell that story here.
+          </p>
+        </Card>
+      </div>
+    </div>
+  </section>
+
+  <!-- ROADMAP + REVEAL -->
+  <section id="roadmap" class="section">
+    <div class="container roadmap-grid">
+      <div>
+        <p class="kicker">What's next</p>
+        <h2>Where this goes</h2>
+        <p class="prose mt-4">
+          [DRAFT — T4] The direction, without promising specific technology or
+          timelines: per-project agents you can spin up on demand, and a public
+          way to track what's being built. Coming, not live.
+        </p>
+      </div>
+      <RevealTeaser />
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="flex items-center gap-x-2.5">
+        <img src="/logos/reggie.svg" alt="" width="28" height="28" class="h-7 w-7" />
+        <span class="wordmark">Regen Accelerator</span>
+      </div>
+      <p class="footer-tag">voiced by Reggie · Regenerating frontier tech to make life more human</p>
     </div>
   </footer>
 </Base>
 
 <style>
   .hero {
-    padding-block: clamp(4rem, 12vh, 9rem) 4rem;
+    padding-block: clamp(3rem, 9vh, 6rem) 4rem;
+  }
+  .hero-grid {
+    display: grid;
+    gap: 2.5rem;
+    align-items: center;
+  }
+  @media (min-width: 900px) {
+    .hero-grid {
+      grid-template-columns: 1.4fr 1fr;
+    }
   }
   .hero h1 {
-    font-size: clamp(2.5rem, 8vw, 5rem);
+    font-size: clamp(2.75rem, 8vw, 5.25rem);
     margin: 0 0 1.5rem;
+  }
+  .hero-art {
+    display: flex;
+    justify-content: center;
+  }
+  .hero-art img {
+    width: clamp(140px, 30vw, 240px);
+    height: auto;
+    transition: transform 0.3s ease;
+  }
+  .hero-art img:hover {
+    transform: scale(0.94);
   }
   .kicker {
     font-family: var(--font-mono);
@@ -80,15 +143,75 @@ import Section from "../components/Section.astro";
     color: var(--secondary); /* Ultra Violet */
     margin: 0 0 0.75rem;
   }
+  .kicker.center {
+    text-align: center;
+  }
   .lede {
     font-size: clamp(1.1rem, 2.5vw, 1.5rem);
     color: var(--muted-foreground);
   }
+  .cta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 2rem;
+  }
+  .tagline {
+    margin-top: 1.5rem;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--foreground);
+  }
+  .cases-title {
+    text-align: center;
+    margin: 0 0 2.5rem;
+  }
+  .card-grid {
+    display: grid;
+    gap: 1.25rem;
+  }
+  @media (min-width: 800px) {
+    .card-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  .roadmap-grid {
+    display: grid;
+    gap: 2rem;
+    align-items: center;
+  }
+  @media (min-width: 900px) {
+    .roadmap-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
   .site-footer {
     padding-block: 3rem;
     border-top: 1px solid var(--border);
+  }
+  .footer-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: flex-start;
+  }
+  @media (min-width: 700px) {
+    .footer-inner {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+  .wordmark {
+    font-family: var(--font-headline);
+    font-weight: 600;
+    font-size: 1.15rem;
+  }
+  .footer-tag {
     font-family: var(--font-mono);
-    font-size: 0.8rem;
+    font-size: 0.78rem;
     color: var(--muted-foreground);
+    margin: 0;
   }
 </style>

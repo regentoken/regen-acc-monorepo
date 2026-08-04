@@ -1,0 +1,28 @@
+---
+// Card — the OG surface: rounded-lg, 1px border, card bg, soft shadow.
+interface Props {
+  kicker?: string;
+  title?: string;
+  class?: string;
+}
+const { kicker, title, class: cls = "" } = Astro.props;
+---
+
+<article class={`rounded-lg border border-border bg-card p-6 shadow-sm md:p-8 ${cls}`}>
+  {kicker && <p class="card-kicker">{kicker}</p>}
+  {title && <h3 class="mt-1 mb-3 text-3xl">{title}</h3>}
+  <div class="text-card-foreground/85 leading-relaxed">
+    <slot />
+  </div>
+</article>
+
+<style>
+  .card-kicker {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--primary); /* Munsell Red */
+    margin: 0;
+  }
+</style>

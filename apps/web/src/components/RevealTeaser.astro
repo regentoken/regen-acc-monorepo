@@ -1,0 +1,80 @@
+---
+// RevealTeaser — a light nod to the OG regen.tips mycelial "encrypt → reveal"
+// leaderboard: mushroom-coded glyphs, redacted, with the Celeste spark glowing
+// through. CSS-only shimmer here (the full seeded-mutation React component is
+// the optional RGA-002 port). "growing underground, reveal soon."
+const ROWS = [
+  "ꙮ⌬⏣◬⟐⌘⏧◈⟡⏃⎔⊛⊕◉",
+  "◈⟡⏃⎔⊛⊕◉⟠⬡⎈⏚⏛ꙮ⌬",
+  "⟐⌘⏧◈⟡⏃⎔⊛⊕◉⟠⬡⎈⏚",
+];
+---
+
+<div class="reveal rounded-lg border border-border bg-card p-6 shadow-sm md:p-8">
+  <div class="mb-4 flex items-end justify-between">
+    <div>
+      <p class="card-kicker">Coming soon</p>
+      <h3 class="mt-1 text-3xl">The proof-of-work record</h3>
+    </div>
+    <span class="hidden font-mono text-xs text-muted-foreground sm:block">reveal soon</span>
+  </div>
+
+  <div class="glyphs" aria-hidden="true">
+    {ROWS.map((row) => <p class="glyph-row">{row}</p>)}
+  </div>
+
+  <p class="mt-5 text-center font-mono text-sm italic text-muted-foreground">
+    scores are growing underground. reveal soon.
+  </p>
+</div>
+
+<style>
+  .card-kicker {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--primary);
+    margin: 0;
+  }
+  .glyphs {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  .glyph-row {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: clamp(1rem, 3.5vw, 1.4rem);
+    letter-spacing: 0.35em;
+    color: var(--foreground);
+    opacity: 0.35;
+    animation: spark 6s ease-in-out infinite;
+  }
+  .glyph-row:nth-child(2) {
+    animation-delay: 2s;
+  }
+  .glyph-row:nth-child(3) {
+    animation-delay: 4s;
+  }
+  /* the Celeste spark radiating through, then fading back underground */
+  @keyframes spark {
+    0%,
+    100% {
+      opacity: 0.3;
+      color: var(--foreground);
+      text-shadow: none;
+    }
+    50% {
+      opacity: 0.9;
+      color: var(--spark); /* Celeste */
+      text-shadow: 0 0 10px color-mix(in oklch, var(--spark) 70%, transparent);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .glyph-row {
+      animation: none;
+      opacity: 0.4;
+    }
+  }
+</style>

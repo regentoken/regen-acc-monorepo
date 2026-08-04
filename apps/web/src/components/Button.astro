@@ -1,0 +1,38 @@
+---
+// Button — ported from the OG regen-app cva variants.
+// default = primary red (#F5013D) · outline = 2px red border.
+interface Props {
+  href?: string;
+  variant?: "default" | "outline" | "ghost";
+  size?: "default" | "lg";
+  class?: string;
+  target?: string;
+  rel?: string;
+}
+const {
+  href,
+  variant = "default",
+  size = "default",
+  class: cls = "",
+  target,
+  rel,
+} = Astro.props;
+
+const base =
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-medium transition-all focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50";
+const variants: Record<string, string> = {
+  default: "bg-primary text-primary-foreground hover:bg-primary/75",
+  outline: "border-2 border-primary bg-background text-foreground hover:bg-primary/15",
+  ghost: "hover:bg-accent hover:text-accent-foreground",
+};
+const sizes: Record<string, string> = {
+  default: "h-10 px-5 py-2.5 text-base",
+  lg: "h-12 px-8 text-lg",
+};
+const className = `${base} ${variants[variant]} ${sizes[size]} ${cls}`;
+const Tag = href ? "a" : "button";
+---
+
+<Tag class={className} href={href} target={target} rel={rel}>
+  <slot />
+</Tag>
