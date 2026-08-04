@@ -1,0 +1,42 @@
+@import "tailwindcss";
+@import "@regen/design-tokens/tokens.css";
+
+/* App-level base styles. Design-system tokens come from @regen/design-tokens;
+   keep this file for app-specific resets and base element styling only. */
+
+html {
+  font-family: var(--font-sans);
+  color: var(--color-ink);
+  background: var(--color-paper);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  margin: 0;
+  line-height: 1.6;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-serif);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+
+a {
+  color: var(--color-accent);
+  text-underline-offset: 0.2em;
+}
+
+.container {
+  width: 100%;
+  max-width: 72rem;
+  margin-inline: auto;
+  padding-inline: var(--space-6);
+}
+
+.prose {
+  max-width: var(--measure);
+}

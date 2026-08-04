@@ -1,0 +1,66 @@
+/* ─────────────────────────────────────────────
+   Regen Accelerator — Design System (STARTER)
+
+   This is a minimal, real starting point — NOT the final system. Design doc
+   T2 calls for a framework-and-tool-agnostic portable design system with an
+   export path to Figma (Tokens Studio) and Canva. That work expands this file
+   (and adds a neutral `design-tokens.json` source of truth alongside it).
+
+   Consumption: an app imports this from its entry stylesheet:
+     @import "@regen/design-tokens/tokens.css";
+   The @theme block below feeds Tailwind v4 utility generation.
+   ───────────────────────────────────────────── */
+
+/* ── CSS custom properties (source of truth for now) ── */
+:root {
+  /* Palette — placeholder Regen values, refine in T2 */
+  --color-ink: #14161a;      /* primary text */
+  --color-graphite: #3a3f47; /* secondary text */
+  --color-paper: #f6f5f2;    /* background */
+  --color-surface: #ffffff;  /* cards / raised surfaces */
+  --color-line: color-mix(in srgb, var(--color-ink) 12%, transparent);
+  --color-accent: #2f7d5b;   /* the ONE accent — regenerative green, placeholder */
+  --color-accent-ink: #ffffff;
+
+  /* Type families */
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  --font-serif: "Source Serif 4", Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* Spacing scale (rem) */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-24: 6rem;
+
+  /* Radius */
+  --radius-sm: 0.25rem;
+  --radius: 0.5rem;
+  --radius-lg: 1rem;
+
+  /* Max content width */
+  --measure: 68ch;
+}
+
+/* ── Tailwind v4 @theme — exposes tokens as utility classes ── */
+@theme {
+  --color-ink: #14161a;
+  --color-graphite: #3a3f47;
+  --color-paper: #f6f5f2;
+  --color-surface: #ffffff;
+  --color-accent: #2f7d5b;
+  --color-accent-ink: #ffffff;
+
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  --font-serif: "Source Serif 4", Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  --radius-sm: 0.25rem;
+  --radius: 0.5rem;
+  --radius-lg: 1rem;
+}

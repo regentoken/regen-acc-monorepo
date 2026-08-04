@@ -1,0 +1,24 @@
+{
+  "name": "@regen/web",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Regen Accelerator — the Request for Regens learning surface (Astro).",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "start": "astro preview --host --port ${PORT:-4321}",
+    "typecheck": "astro check"
+  },
+  "dependencies": {
+    "@regen/design-tokens": "workspace:*",
+    "astro": "^6.0.0"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.4",
+    "@tailwindcss/vite": "^4.0.0",
+    "tailwindcss": "^4.0.0",
+    "typescript": "^5.7.0"
+  }
+}
