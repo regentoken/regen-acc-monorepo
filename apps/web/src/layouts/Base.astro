@@ -18,6 +18,11 @@ const {
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    {/* Adobe Typekit — ivypresto (headline/display) + stratos (body). The kit's
+        domain allowlist must include the deploy domain, or the system-font
+        fallbacks in @regen/design-tokens take over gracefully. */}
+    <link rel="preload" href="https://use.typekit.net/jfo3jls.css" as="style" />
+    <link rel="stylesheet" href="https://use.typekit.net/jfo3jls.css" />
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta property="og:title" content={title} />

@@ -1,42 +1,71 @@
 @import "tailwindcss";
 @import "@regen/design-tokens/tokens.css";
 
-/* App-level base styles. Design-system tokens come from @regen/design-tokens;
-   keep this file for app-specific resets and base element styling only. */
+/* App-level base styles. The design system (palette, type, radius) comes from
+   @regen/design-tokens — extracted from the OG regen.tips system. This file
+   only applies the element-level defaults, matching the OG globals.css. */
 
-html {
-  font-family: var(--font-sans);
-  color: var(--color-ink);
-  background: var(--color-paper);
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: var(--font-sans); /* stratos */
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  button {
+    @apply rounded-lg;
+  }
+
+  /* Headings — ivypresto, per the OG. h1/h2 headline, h3/h4 display. */
+  h1 {
+    @apply text-5xl font-semibold tracking-tight;
+    font-family: var(--font-headline);
+    line-height: 1.2;
+  }
+
+  h2 {
+    @apply text-4xl font-semibold tracking-tight;
+    font-family: var(--font-headline);
+    line-height: 1.2;
+  }
+
+  /* Signature move from the OG: italic emphasis inside a headline. */
+  h1 > span.headline-italic,
+  h2 > span.headline-italic {
+    @apply font-semibold tracking-tight;
+    font-family: var(--font-headline);
+    font-style: italic;
+    font-weight: 600;
+    font-stretch: normal;
+    line-height: 1.2;
+  }
+
+  h3 {
+    @apply text-3xl;
+    font-family: var(--font-display);
+  }
+
+  h4 {
+    @apply text-xl;
+    font-family: var(--font-display);
+  }
+
+  a {
+    color: var(--primary);
+    text-underline-offset: 0.2em;
+  }
 }
 
-body {
-  margin: 0;
-  line-height: 1.6;
-}
-
-h1,
-h2,
-h3 {
-  font-family: var(--font-serif);
-  line-height: 1.15;
-  letter-spacing: -0.01em;
-}
-
-a {
-  color: var(--color-accent);
-  text-underline-offset: 0.2em;
-}
-
+/* Layout helpers, matching the OG container width. */
 .container {
-  width: 100%;
-  max-width: 72rem;
-  margin-inline: auto;
-  padding-inline: var(--space-6);
+  @apply mx-auto flex w-full max-w-3xl flex-col px-4 sm:px-6 lg:max-w-7xl lg:px-8;
 }
 
 .prose {
-  max-width: var(--measure);
+  max-width: 68ch;
 }
