@@ -1,5 +1,5 @@
 {
-  "name": "regen-accelerator-web",
+  "name": "regen-acc-monorepo",
   "version": "0.1.0",
   "private": true,
   "description": "Regen Accelerator — monorepo container. Phase 1: the Request for Regens learning surface (apps/web).",

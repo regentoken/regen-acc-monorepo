@@ -8,7 +8,7 @@ import tailwindcss from "@tailwindcss/vite";
 // See the design doc, "Long-term architecture: frontend stack."
 export default defineConfig({
   output: "static",
-  site: "https://regen-accelerator-web.pages.dev", // placeholder — set real domain at deploy
+  site: "https://regen-acc-monorepo.pages.dev", // placeholder — set real domain at deploy
   vite: {
     plugins: [tailwindcss()],
   },

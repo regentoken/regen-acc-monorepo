@@ -1,4 +1,4 @@
-# regen-accelerator-web
+# regen-acc-monorepo
 
 The **Regen Accelerator** monorepo. Phase 1 is the **Request for Regens** learning surface — a static Astro site that teaches building regeneration with AI, evidenced by real shipped work.
 
@@ -7,7 +7,7 @@ Structured as a monorepo from day one (pnpm + Turborepo, `apps/*` + `packages/*`
 ## Layout
 
 ```
-regen-accelerator-web/
+regen-acc-monorepo/
 ├── apps/
 │   └── web/                 @regen/web — the Astro learning surface (phase 1)
 └── packages/
