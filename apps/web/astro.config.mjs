@@ -8,7 +8,7 @@ import tailwindcss from "@tailwindcss/vite";
 // See the design doc, "Long-term architecture: frontend stack."
 export default defineConfig({
   output: "static",
-  site: "https://regen-acc-monorepo.pages.dev", // placeholder — set real domain at deploy
+  site: "https://regen-acc.vercel.app", // Vercel deploy domain; update again once the v1 launch domain is chosen
   vite: {
     plugins: [tailwindcss()],
   },
