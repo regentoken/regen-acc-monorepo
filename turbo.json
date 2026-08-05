@@ -4,12 +4,28 @@
     "build": {
       "dependsOn": ["^build"],
       "outputs": ["dist/**"],
-      "env": ["DATABASE_URL", "NEBIUS_API_KEY", "NEBIUS_BASE_URL", "NEBIUS_MODEL"]
+      "env": [
+        "DATABASE_URL",
+        "NEBIUS_API_KEY",
+        "NEBIUS_BASE_URL",
+        "NEBIUS_MODEL",
+        "TELEGRAM_BOT_TOKEN",
+        "TELEGRAM_CHAT_ID",
+        "DISCORD_WEBHOOK_URL"
+      ]
     },
     "dev": {
       "cache": false,
       "persistent": true,
-      "env": ["DATABASE_URL", "NEBIUS_API_KEY", "NEBIUS_BASE_URL", "NEBIUS_MODEL"]
+      "env": [
+        "DATABASE_URL",
+        "NEBIUS_API_KEY",
+        "NEBIUS_BASE_URL",
+        "NEBIUS_MODEL",
+        "TELEGRAM_BOT_TOKEN",
+        "TELEGRAM_CHAT_ID",
+        "DISCORD_WEBHOOK_URL"
+      ]
     },
     "typecheck": {
       "dependsOn": ["^build"]

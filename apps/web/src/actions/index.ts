@@ -5,6 +5,7 @@ import { z } from "astro:schema";
 import { db } from "../db/client";
 import { inviteCodes, rateLimitHits, submissions } from "../db/schema";
 import { isAdminAuthed } from "../lib/admin-auth";
+import { notifySubmission } from "../lib/notify";
 import { scoreIdea } from "../lib/scoring";
 
 function assertAdmin(context: ActionAPIContext) {
@@ -134,6 +135,16 @@ export const server = {
       }
       await assertUnderRateLimit("mentorship", context);
       await insertSubmission("mentorship", input);
+      // Mentor/sponsor submissions have no admin review queue (see
+      // apps/web/src/pages/admin/index.astro), so a push notification on
+      // insert is the only way anyone finds out. Never let a notification
+      // failure surface as a 500 to the visitor — belt and suspenders on
+      // top of notifySubmission's own internal error handling.
+      try {
+        await notifySubmission("mentorship", input);
+      } catch (err) {
+        console.error("[notify] notifySubmission threw unexpectedly for mentorship submission:", err);
+      }
       return { ok: true };
     },
   }),
@@ -147,6 +158,11 @@ export const server = {
       }
       await assertUnderRateLimit("sponsorship", context);
       await insertSubmission("sponsorship", input);
+      try {
+        await notifySubmission("sponsorship", input);
+      } catch (err) {
+        console.error("[notify] notifySubmission threw unexpectedly for sponsorship submission:", err);
+      }
       return { ok: true };
     },
   }),
