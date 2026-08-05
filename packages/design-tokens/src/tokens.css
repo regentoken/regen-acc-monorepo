@@ -94,6 +94,28 @@
   --spark: oklch(0.9047 0.0601 189.65);
 }
 
+/* ── Spacing & container scale — EXTRACTED, not invented, from the OG source
+   (regen-tips-webapp: src/app/page.tsx, src/app/about/page.tsx,
+   src/styles/globals.css, src/components/layout/{navbar,footer}.tsx).
+
+   The OG never uses one fixed reading-column width. It runs a two-layer
+   system: an outer page gutter (`.container`, unchanged below — already
+   ported correctly) and, inside it, one of three per-section profiles that
+   widen progressively across breakpoints. `--container-narrow` alone is the
+   dominant pattern (9 of 28 max-w-* uses app-wide). The `--space-*` values
+   are the confirmed 3+ repeat rhythm: gap-y-8 / gap-y-4 / px-4. ── */
+:root {
+  --container-narrow: 36rem; /* OG max-w-xl — single-column prose */
+  --container-wide-1: 42rem; /* OG md:max-w-2xl */
+  --container-wide-2: 48rem; /* OG lg:max-w-3xl */
+  --container-wide-3: 56rem; /* OG xl:max-w-4xl */
+  --container-outer: 80rem; /* OG max-w-7xl — footer/.container's own lg bound */
+
+  --space-block-gap: 2rem; /* OG gap-y-8 — inter-block rhythm within a section */
+  --space-para-gap: 1rem; /* OG gap-y-4 — paragraph rhythm */
+  --space-mobile-inset: 1rem; /* OG px-4 — mobile-only edge inset */
+}
+
 .dark {
   --background: oklch(0.141 0.005 285.823);
   --foreground: oklch(0.985 0 0);

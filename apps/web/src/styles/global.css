@@ -29,8 +29,9 @@
   }
 
   h2 {
-    @apply text-4xl font-semibold tracking-tight;
+    @apply font-semibold tracking-tight;
     font-family: var(--font-headline);
+    font-size: clamp(2rem, 3.5vw, 2.75rem); /* OG: text-4xl md:text-5xl */
     line-height: 1.2;
   }
 
@@ -43,6 +44,8 @@
     font-weight: 600;
     font-stretch: normal;
     line-height: 1.2;
+    padding-bottom: 0.08em; /* descender clearance (Regens has a "g") */
+    display: inline-block;
   }
 
   h3 {
@@ -55,10 +58,24 @@
     font-family: var(--font-display);
   }
 
+  /* Links: the OG treatment. Default to high-contrast ink, turn Munsell Red on
+     hover. Buttons and nav override color via their own classes. */
   a {
-    color: var(--primary);
+    color: var(--foreground);
     text-underline-offset: 0.2em;
+    transition: color 0.15s ease;
   }
+  a:hover {
+    color: var(--primary);
+  }
+}
+
+/* Body-content links carry an underline so they read as links against the ink;
+   the color contrast stays AA (ink on paper), red only on hover. */
+.section-body a,
+.reveal a {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
 }
 
 /* Layout helpers, matching the OG container width. */
@@ -68,4 +85,34 @@
 
 .prose {
   max-width: 68ch;
+}
+
+/* Shared section rhythm. The OG regen.tips homepage carries its vertical rhythm
+   with pure whitespace (per-block `pb-12` inside a `py-12` page), no divider
+   lines. We match that: consistent padding, NO border-top. The airiness comes
+   from narrow centered columns (see Section.astro), not from big padding. */
+.section {
+  padding-block: clamp(2.75rem, 6vw, 4.5rem);
+  scroll-margin-top: 5.5rem; /* clear the sticky nav on anchor jumps */
+}
+
+/* Restrained scroll-reveal: the one motion layer beyond hover states.
+   MOTION_INTENSITY 4 — a gentle fade-up, not a show. */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(1rem);
+  transition:
+    opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+[data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
 }

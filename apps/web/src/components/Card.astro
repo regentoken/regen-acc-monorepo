@@ -1,28 +1,21 @@
 ---
-// Card — the OG surface: rounded-lg, 1px border, card bg, soft shadow.
+// Card — the OG regen.tips panel: rounded-lg with a 2px Munsell Red border and
+// no shadow. The red-outlined panel (not a soft gray shadowed card) is the
+// signature surface. Rest props forward `data-reveal` / inline delay.
 interface Props {
-  kicker?: string;
   title?: string;
   class?: string;
+  [attr: string]: unknown;
 }
-const { kicker, title, class: cls = "" } = Astro.props;
+const { title, class: cls = "", ...rest } = Astro.props;
 ---
 
-<article class={`rounded-lg border border-border bg-card p-6 shadow-sm md:p-8 ${cls}`}>
-  {kicker && <p class="card-kicker">{kicker}</p>}
-  {title && <h3 class="mt-1 mb-3 text-3xl">{title}</h3>}
+<article
+  class={`rounded-lg border-2 border-primary bg-card p-6 md:p-8 ${cls}`}
+  {...rest}
+>
+  {title && <h3 class="mb-3 text-2xl md:text-3xl">{title}</h3>}
   <div class="text-card-foreground/85 leading-relaxed">
     <slot />
   </div>
 </article>
-
-<style>
-  .card-kicker {
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--primary); /* Munsell Red */
-    margin: 0;
-  }
-</style>

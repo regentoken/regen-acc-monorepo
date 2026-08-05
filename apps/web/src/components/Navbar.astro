@@ -1,30 +1,29 @@
 ---
-// Navbar — ported from the OG regen-app layout: Reggie logo + ivypresto
-// wordmark on the left, centered anchor nav (hover → primary red), a primary
-// CTA on the right. Static anchors for the single-page learning surface.
-import Button from "./Button.astro";
-
+// Navbar — the OG regen.tips bar: an 80px header (h-20), the mushroom mark at
+// OG scale next to the ivypresto wordmark, and quiet anchor links that turn
+// Munsell Red on hover. No CTA button: the hero owns the call, and the OG's
+// right slot was a wallet action we don't carry here.
 const NAV = [
   { label: "what", href: "#what" },
-  { label: "cases", href: "#cases" },
+  { label: "proof", href: "#cases" },
   { label: "roadmap", href: "#roadmap" },
 ];
 ---
 
-<header class="sticky top-0 z-20 w-full border-b border-border/60 bg-background/85 backdrop-blur">
-  <div class="mx-auto flex h-20 w-full max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-    <a href="/" class="flex items-center gap-x-2.5 group">
+<header class="sticky top-0 z-20 w-full border-b border-border/50 bg-background/90 backdrop-blur">
+  <div class="mx-auto flex h-20 w-full max-w-6xl items-center justify-between px-6 lg:px-8">
+    <a href="/" class="group flex items-center gap-x-3">
       <img
         src="/logos/reggie.svg"
-        alt="Reggie — a regenerative mushroom"
-        width="40"
-        height="40"
-        class="h-9 w-9 transition duration-300 ease-in-out group-hover:scale-90"
+        alt="Reggie, a regenerative mushroom"
+        width="48"
+        height="48"
+        class="h-12 w-12 transition duration-300 ease-in-out group-hover:scale-90"
       />
       <span class="wordmark text-xl font-semibold tracking-tight">Regen Accelerator</span>
     </a>
 
-    <nav class="hidden items-center gap-10 md:flex">
+    <nav class="hidden items-center gap-8 md:flex">
       {
         NAV.map((item) => (
           <a href={item.href} class="nav-link text-lg font-medium">
@@ -33,10 +32,6 @@ const NAV = [
         ))
       }
     </nav>
-
-    <div class="flex items-center gap-3">
-      <Button href="#cases" size="default" class="hidden sm:inline-flex">See the proof</Button>
-    </div>
   </div>
 </header>
 
