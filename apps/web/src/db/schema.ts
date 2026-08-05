@@ -19,6 +19,16 @@ export const inviteCodes = pgTable("invite_codes", {
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
 });
 
+// Per-IP abuse mitigation for the open (non-invite-gated) mentor/sponsor
+// routes. One row per attempt so the count is a real DB query, not an
+// in-memory counter (Vercel functions don't share memory across invocations).
+export const rateLimitHits = pgTable("rate_limit_hits", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  ip: text("ip").notNull(),
+  route: text("route").notNull(), // "mentorship" | "sponsorship"
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+});
+
 export const submissions = pgTable("submissions", {
   id: uuid("id").primaryKey().defaultRandom(),
   type: submissionType("type").notNull(),

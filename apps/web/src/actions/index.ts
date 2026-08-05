@@ -1,9 +1,9 @@
 import { createHash } from "node:crypto";
-import { and, eq, sql } from "drizzle-orm";
-import { ActionError, defineAction } from "astro:actions";
+import { and, eq, gte, sql } from "drizzle-orm";
+import { ActionError, defineAction, type ActionAPIContext } from "astro:actions";
 import { z } from "astro:schema";
 import { db } from "../db/client";
-import { inviteCodes, submissions } from "../db/schema";
+import { inviteCodes, rateLimitHits, submissions } from "../db/schema";
 
 // Three separate actions (not one shared "submit"), one per ask. Astro scopes
 // getActionResult() by action name, so this is what keeps a result from one
@@ -49,6 +49,33 @@ async function insertSubmission(
   });
 }
 
+// Abuse mitigation for the open (non-invite-gated) mentor/sponsor routes.
+// DB-backed, not in-memory — Vercel functions don't share memory across
+// invocations, so an in-memory counter would silently do nothing.
+const RATE_LIMIT_MAX_PER_HOUR = 5;
+
+async function assertUnderRateLimit(route: "mentorship" | "sponsorship", context: ActionAPIContext) {
+  const ip = context.clientAddress;
+
+  // Record this attempt first, then count the window it falls in — so a
+  // request that gets rate-limited still counts against the next window
+  // instead of getting a free retry.
+  await db.insert(rateLimitHits).values({ ip, route });
+
+  const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000);
+  const [{ count }] = await db
+    .select({ count: sql<number>`count(*)::int` })
+    .from(rateLimitHits)
+    .where(and(eq(rateLimitHits.ip, ip), eq(rateLimitHits.route, route), gte(rateLimitHits.createdAt, oneHourAgo)));
+
+  if (count > RATE_LIMIT_MAX_PER_HOUR) {
+    throw new ActionError({
+      code: "TOO_MANY_REQUESTS",
+      message: "Too many submissions from this connection. Try again later.",
+    });
+  }
+}
+
 export const server = {
   submitIdea: defineAction({
     accept: "form",
@@ -90,10 +117,11 @@ export const server = {
   submitMentorship: defineAction({
     accept: "form",
     input: z.object(baseInput),
-    handler: async (input) => {
+    handler: async (input, context) => {
       if (input.website) {
         return { ok: true };
       }
+      await assertUnderRateLimit("mentorship", context);
       await insertSubmission("mentorship", input);
       return { ok: true };
     },
@@ -102,10 +130,11 @@ export const server = {
   submitSponsorship: defineAction({
     accept: "form",
     input: z.object(baseInput),
-    handler: async (input) => {
+    handler: async (input, context) => {
       if (input.website) {
         return { ok: true };
       }
+      await assertUnderRateLimit("sponsorship", context);
       await insertSubmission("sponsorship", input);
       return { ok: true };
     },
