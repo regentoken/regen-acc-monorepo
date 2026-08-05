@@ -1,0 +1,9 @@
+---
+import { clearAdminSession } from "../../lib/admin-auth";
+
+if (Astro.request.method === "POST") {
+  clearAdminSession(Astro.cookies);
+}
+
+return Astro.redirect("/admin/login");
+---

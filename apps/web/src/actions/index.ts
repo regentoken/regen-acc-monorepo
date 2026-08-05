@@ -4,6 +4,16 @@ import { ActionError, defineAction, type ActionAPIContext } from "astro:actions"
 import { z } from "astro:schema";
 import { db } from "../db/client";
 import { inviteCodes, rateLimitHits, submissions } from "../db/schema";
+import { isAdminAuthed } from "../lib/admin-auth";
+
+function assertAdmin(context: ActionAPIContext) {
+  // Defense in depth: the admin page itself redirects unauthenticated
+  // visitors, but actions are directly callable at /_actions/... regardless
+  // of which page called them, so the same check runs here too.
+  if (!isAdminAuthed(context.cookies)) {
+    throw new ActionError({ code: "UNAUTHORIZED", message: "Admin session required." });
+  }
+}
 
 // Three separate actions (not one shared "submit"), one per ask. Astro scopes
 // getActionResult() by action name, so this is what keeps a result from one
@@ -139,4 +149,22 @@ export const server = {
       return { ok: true };
     },
   }),
+
+  admin: {
+    // Approve & Score lives in RGA-012 (blocked on Nebius Token Factory
+    // credentials + the scoring rubric — not built yet). Reject is
+    // self-contained and doesn't depend on either.
+    reject: defineAction({
+      accept: "form",
+      input: z.object({ submissionId: z.string().uuid() }),
+      handler: async (input, context) => {
+        assertAdmin(context);
+        await db
+          .update(submissions)
+          .set({ status: "archived" })
+          .where(eq(submissions.id, input.submissionId));
+        return { ok: true };
+      },
+    }),
+  },
 };

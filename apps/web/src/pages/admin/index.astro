@@ -1,0 +1,180 @@
+---
+import { eq } from "drizzle-orm";
+import { actions } from "astro:actions";
+import Base from "../../layouts/Base.astro";
+import { isAdminAuthed } from "../../lib/admin-auth";
+import { db } from "../../db/client";
+import { submissions } from "../../db/schema";
+
+if (!isAdminAuthed(Astro.cookies)) {
+  return Astro.redirect("/admin/login");
+}
+
+const rejectResult = Astro.getActionResult(actions.admin.reject);
+
+const pending = await db
+  .select()
+  .from(submissions)
+  .where(eq(submissions.status, "pending"))
+  .orderBy(submissions.createdAt);
+---
+
+<Base title="Admin: Regen Accelerator">
+  <main class="admin-page">
+    <header class="admin-header">
+      <h1>Pending submissions</h1>
+      <form method="POST" action="/admin/logout">
+        <button type="submit" class="logout-btn">Log out</button>
+      </form>
+    </header>
+
+    {rejectResult?.error && <p class="admin-error">{rejectResult.error.message}</p>}
+
+    {pending.length === 0 && <p class="empty-state">Nothing pending.</p>}
+
+    <div class="submission-list">
+      {
+        pending.map((s) => (
+          <article class="submission-card">
+            <div class="submission-meta">
+              <span class="submission-type">{s.type}</span>
+              <span class="submission-date">{s.createdAt.toISOString().slice(0, 16).replace("T", " ")}</span>
+            </div>
+            <p class="submission-description">{s.description}</p>
+            <dl class="submission-contact">
+              <div>
+                <dt>Name</dt>
+                <dd>{s.contactName}</dd>
+              </div>
+              <div>
+                <dt>Contact</dt>
+                <dd>
+                  {s.contactPlatform}: {s.contactValue}
+                </dd>
+              </div>
+              {s.proofUrl && (
+                <div>
+                  <dt>Proof</dt>
+                  <dd>
+                    <a href={s.proofUrl} target="_blank" rel="noopener noreferrer">
+                      {s.proofUrl}
+                    </a>
+                  </dd>
+                </div>
+              )}
+            </dl>
+            <div class="submission-actions">
+              <button type="button" class="approve-btn" disabled title="Nebius Token Factory scoring not wired yet (RGA-012)">
+                Approve & Score
+              </button>
+              <form method="POST" action={actions.admin.reject}>
+                <input type="hidden" name="submissionId" value={s.id} />
+                <button type="submit" class="reject-btn">
+                  Reject
+                </button>
+              </form>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </main>
+</Base>
+
+<style>
+  .admin-page {
+    max-width: var(--container-wide-2);
+    margin-inline: auto;
+    padding: 2.5rem 1.5rem 4rem;
+  }
+  .admin-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+  }
+  .admin-header h1 {
+    font-size: 1.75rem;
+    margin: 0;
+  }
+  .logout-btn {
+    border: 1.5px solid var(--border);
+    border-radius: 0.5rem;
+    padding: 0.4rem 0.9rem;
+    background: var(--background);
+    color: var(--foreground);
+    cursor: pointer;
+    font: inherit;
+    font-size: 0.85rem;
+  }
+  .admin-error {
+    color: var(--destructive);
+    margin-bottom: 1rem;
+  }
+  .empty-state {
+    color: var(--muted-foreground);
+  }
+  .submission-list {
+    display: grid;
+    gap: 1.25rem;
+  }
+  .submission-card {
+    border: 2px solid var(--border);
+    border-radius: 0.5rem;
+    padding: 1.25rem 1.5rem;
+  }
+  .submission-meta {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--secondary);
+    margin-bottom: 0.5rem;
+  }
+  .submission-description {
+    margin: 0 0 0.75rem;
+  }
+  .submission-contact {
+    display: grid;
+    gap: 0.4rem;
+    margin: 0 0 1rem;
+    font-size: 0.85rem;
+  }
+  .submission-contact div {
+    display: flex;
+    gap: 0.5rem;
+  }
+  .submission-contact dt {
+    font-weight: 600;
+    min-width: 4.5rem;
+  }
+  .submission-contact dd {
+    margin: 0;
+  }
+  .submission-actions {
+    display: flex;
+    gap: 0.75rem;
+  }
+  .approve-btn,
+  .reject-btn {
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.5rem 1.1rem;
+    font: inherit;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .approve-btn {
+    background: var(--muted);
+    color: var(--muted-foreground);
+  }
+  .approve-btn:disabled {
+    cursor: not-allowed;
+  }
+  .reject-btn {
+    background: transparent;
+    border: 1.5px solid var(--destructive);
+    color: var(--destructive);
+  }
+</style>

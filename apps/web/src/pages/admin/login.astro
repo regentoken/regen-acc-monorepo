@@ -1,0 +1,96 @@
+---
+import { timingSafeEqual } from "node:crypto";
+import Base from "../../layouts/Base.astro";
+import { isAdminAuthed, setAdminSession } from "../../lib/admin-auth";
+
+// Smallest viable admin auth (RGA-015): a single shared password checked
+// against ADMIN_SECRET, no user/session table. This page owns the plain
+// login POST directly (not an Astro Action) so it can issue a real
+// redirect response after setting the cookie.
+
+if (isAdminAuthed(Astro.cookies)) {
+  return Astro.redirect("/admin");
+}
+
+let error = "";
+
+if (Astro.request.method === "POST") {
+  const form = await Astro.request.formData();
+  const password = String(form.get("password") ?? "");
+  const expected = process.env.ADMIN_SECRET ?? "";
+
+  const a = Buffer.from(password);
+  const b = Buffer.from(expected);
+  const matches = expected.length > 0 && a.length === b.length && timingSafeEqual(a, b);
+
+  if (matches) {
+    setAdminSession(Astro.cookies);
+    return Astro.redirect("/admin");
+  }
+
+  error = "Wrong password.";
+}
+---
+
+<Base title="Admin login: Regen Accelerator">
+  <main class="login-page">
+    <form method="POST" class="login-form">
+      <h1>Admin</h1>
+      <label class="field">
+        <span>Password</span>
+        <input type="password" name="password" required autofocus />
+      </label>
+      <button type="submit">Log in</button>
+      {error && <p class="login-error">{error}</p>}
+    </form>
+  </main>
+</Base>
+
+<style>
+  .login-page {
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-inline: 1.5rem;
+  }
+  .login-form {
+    width: 100%;
+    max-width: 22rem;
+    display: grid;
+    gap: 1.25rem;
+  }
+  .login-form h1 {
+    font-size: 1.75rem;
+    margin: 0;
+    text-align: center;
+  }
+  .field {
+    display: grid;
+    gap: 0.375rem;
+    font-size: 0.9rem;
+  }
+  .field input {
+    border: 1.5px solid var(--border);
+    border-radius: 0.5rem;
+    padding: 0.6rem 0.75rem;
+    font: inherit;
+    background: var(--background);
+    color: var(--foreground);
+  }
+  button {
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.7rem 1.5rem;
+    font-weight: 600;
+    background: var(--primary);
+    color: var(--primary-foreground);
+    cursor: pointer;
+  }
+  .login-error {
+    color: var(--destructive);
+    font-size: 0.85rem;
+    margin: 0;
+    text-align: center;
+  }
+</style>
