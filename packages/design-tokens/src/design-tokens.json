@@ -1,0 +1,56 @@
+{
+  "$description": "Regen Accelerator portable design tokens. W3C Design Tokens Community Group format (https://design-tokens.github.io/community-group/format/) — framework- and tool-agnostic. tokens.css in this package is the Tailwind v4 consumption layer generated from these same values; treat this file, not that one, as the source of truth when porting the system to a new surface. Extracted from the OG regen.tips design system (regen-tips-webapp), not invented.",
+  "color": {
+    "$type": "color",
+    "background": { "$value": "#FEFCF9", "$description": "Baby Powder — page/paper background" },
+    "foreground": { "$value": "#352D39", "$description": "Raisin Black — primary ink" },
+    "primary": { "$value": "#F5013D", "$description": "Munsell Red — primary brand/action color" },
+    "secondary": { "$value": "#565676", "$description": "Ultra Violet — secondary text/accent" },
+    "accent": { "$value": "#B2EDE8", "$description": "Celeste (teal) — accent; doubles as the \"spark/reveal\" color for the mycelial motion layer" },
+    "muted": { "$value": "#F5F5F8", "$description": "Low-emphasis surface" },
+    "muted-foreground": { "$value": "#70707B", "$description": "Low-emphasis text" },
+    "border": { "$value": "#E4E4E7", "$description": "Default border/divider" },
+    "destructive": { "$value": "#E7000B", "$description": "Error/destructive state" }
+  },
+  "font": {
+    "family": {
+      "$type": "fontFamily",
+      "headline": { "$value": ["ivypresto-headline", "Source Serif 4", "Georgia", "serif"], "$description": "Adobe Typekit kit jfo3jls. h1/h2, carries the signature italic-emphasis span." },
+      "display": { "$value": ["ivypresto-display", "Source Serif 4", "Georgia", "serif"], "$description": "Adobe Typekit kit jfo3jls. h3/h4." },
+      "body": { "$value": ["stratos", "system-ui", "-apple-system", "sans-serif"], "$description": "Adobe Typekit kit jfo3jls. Body text." },
+      "mono": { "$value": ["ui-monospace", "JetBrains Mono", "SFMono-Regular", "monospace"], "$description": "System mono fallback; regen-app used geist-mono via next/font." }
+    }
+  },
+  "radius": {
+    "$type": "dimension",
+    "base": { "$value": "8px" },
+    "sm": { "$value": "4px" },
+    "md": { "$value": "6px" },
+    "lg": { "$value": "8px" },
+    "xl": { "$value": "12px" }
+  },
+  "container": {
+    "$type": "dimension",
+    "$description": "Per-section max-width profile, extracted from the OG's real usage (not a single fixed reading column) — see tokens.css for the full frequency-scan citation.",
+    "narrow": { "$value": "576px", "$description": "OG max-w-xl — single-column prose. Dominant pattern, 9 of 28 max-w-* uses app-wide." },
+    "wide-1": { "$value": "672px", "$description": "OG md:max-w-2xl" },
+    "wide-2": { "$value": "768px", "$description": "OG lg:max-w-3xl" },
+    "wide-3": { "$value": "896px", "$description": "OG xl:max-w-4xl" },
+    "outer": { "$value": "1280px", "$description": "OG max-w-7xl — outer page gutter bound" }
+  },
+  "spacing": {
+    "$type": "dimension",
+    "block-gap": { "$value": "32px", "$description": "OG gap-y-8 — inter-block rhythm within a section" },
+    "para-gap": { "$value": "16px", "$description": "OG gap-y-4 — paragraph rhythm" },
+    "mobile-inset": { "$value": "16px", "$description": "OG px-4 — mobile-only edge inset" }
+  },
+  "color-dark": {
+    "$type": "color",
+    "$description": "Dark-mode values exist in tokens.css (.dark class, ported 1:1 from regen-app) but are NOT wired to a live toggle anywhere in apps/web as of 2026-08-05 — inactive/unused. Kept here for portability if dark mode is activated later; do not treat as a shipped feature.",
+    "background": { "$value": "#09090B" },
+    "foreground": { "$value": "#FAFAFA" },
+    "primary": { "$value": "#F5013D", "$description": "Munsell Red stays primary in dark" },
+    "secondary": { "$value": "#565676" },
+    "accent": { "$value": "#B2EDE8", "$description": "Celeste stays the accent/spark in dark" }
+  }
+}

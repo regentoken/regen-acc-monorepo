@@ -2,12 +2,13 @@
   "name": "@regen/design-tokens",
   "version": "0.1.0",
   "private": true,
-  "description": "Regen Accelerator design system — CSS custom properties + Tailwind v4 @theme. STARTER: expand into the full framework-and-tool-agnostic portable system (design doc T2).",
+  "description": "Regen Accelerator design system — CSS custom properties + Tailwind v4 @theme, plus a portable W3C Design Tokens Community Group source (design-tokens.json).",
   "type": "module",
   "main": "src/index.ts",
   "exports": {
     ".": "./src/index.ts",
-    "./tokens.css": "./src/tokens.css"
+    "./tokens.css": "./src/tokens.css",
+    "./design-tokens.json": "./src/design-tokens.json"
   },
   "scripts": {
     "typecheck": "tsc --noEmit"
