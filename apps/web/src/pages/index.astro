@@ -6,26 +6,28 @@ import Card from "../components/Card.astro";
 import Button from "../components/Button.astro";
 import RevealTeaser from "../components/RevealTeaser.astro";
 
-// STRUCTURE is now v1-shaped: navbar, logo, hero with primary-red CTAs, cards,
-// the reveal moment, footer). Word-choice constraints hold:
-//   no capital/funding/grants/investment · no NDA names · no Token Dad.
-// Voice: regen/acc + regenmaxxing, mushroom-mycelial, playful-but-credible.
+// Request for Regens — the first Regen Accelerator artifact. Its job is to
+// lock the design system (extracted from the OG regen.tips work) and stand as
+// one complete, on-brand thing. Aura rules, from the OG: compact centered
+// clusters, narrow reading columns, whitespace rhythm (no dividers), red-
+// outlined panels, italic-emphasis headings, one accent that acts.
+// Constraints: no capital/funding/grants/investment; no NDA names; no Token
+// Dad; no em-dash in copy. Primary user: founders who need help shipping.
 ---
 
 <Base title="Request for Regens: Regen Accelerator">
   <Navbar />
 
-  <!-- HERO -->
+  <!-- HERO: compact centered cluster, promise left, Reggie right -->
   <header class="hero">
-    <div class="container hero-grid">
+    <div class="hero-grid">
       <div class="hero-copy">
-        <p class="kicker">regen/acc · regenmaxxing</p>
         <h1>
           Request for <span class="headline-italic">Regens</span>
         </h1>
-        <p class="lede prose">
-          Learn to build regeneration with AI: real tools, real guidance, and a
-          public record of what gets shipped.
+        <p class="hero-lede">
+          Learn to build regeneration with AI. Real tools, real guidance, and a
+          public record of what actually ships.
         </p>
         <div class="cta-row">
           <Button href="#cases" size="lg">See the proof</Button>
@@ -33,84 +35,110 @@ import RevealTeaser from "../components/RevealTeaser.astro";
         </div>
       </div>
       <div class="hero-art">
-        <img src="/logos/reggie.svg" alt="Reggie, a regenerative mushroom" width="260" height="260" />
+        <img
+          src="/logos/reggie.svg"
+          alt="Reggie, a regenerative mushroom"
+          width="240"
+          height="240"
+        />
       </div>
     </div>
   </header>
 
   <!-- WHAT THIS IS -->
-  <Section id="what" title="A learning surface, not an application form">
-    <p class="prose">
-      Learn by doing, in the open. This is where you master AI-powered
-      regeneration: the tools, the process, the decisions that move things. No
-      forms, no waiting. A live curriculum built around real projects that have
-      already shipped, and the regenmaxxing mindset: using AI like the top
-      builders do, focused on what makes life more human.
+  <Section id="what">
+    <h2 slot="heading">
+      A <span class="headline-italic">learning surface</span>, not an application form
+    </h2>
+    <p>
+      Learn by doing, in the open. The tools, the process, the decisions that
+      actually move a build, shown on real work instead of slides. No forms, no
+      waiting list.
+    </p>
+    <p>
+      You learn the way the strongest builders now work: regenmaxxing, using AI
+      aggressively and pointing it at what makes life more human.
     </p>
   </Section>
 
-  <!-- CASES (cards) -->
-  <Section id="cases" kicker="Proof" title="Real builds, already shipped" center>
+  <!-- CASES -->
+  <Section id="cases" wide>
+    <h2 slot="heading">
+      Real builds, <span class="headline-italic">already shipped</span>
+    </h2>
     <div class="card-grid">
-      <Card kicker="Case 01" title="DNAI: a builder agent that ships" data-reveal style="transition-delay: 0ms">
+      <Card title="DNAI, a builder agent that ships" data-reveal style="transition-delay: 0ms">
         <p>
-          DNAI is an AI agent that builds and ships real software for regenerative
-          projects. It’s created public artifacts used by real teams, and its
-          approach is documented in a peer-reviewed preprint (DOI
-          <code>10.55277/researchhub.eoe1iia0.1</code>). This is proof that AI
-          can drive meaningful impact when guided by the right principles.
+          DNAI is an AI agent that designs and ships real software for
+          regenerative work. It has produced public artifacts other teams rely
+          on, and its method is written up in a peer-reviewed preprint (<a
+            href="https://doi.org/10.55277/researchhub.eoe1iia0.1"
+            target="_blank"
+            rel="noopener noreferrer">DOI 10.55277/researchhub.eoe1iia0.1</a
+          >). Proof that a well-guided agent can do real, verifiable work.
         </p>
       </Card>
       <Card
-        kicker="Case 02"
         title="A caregiver surface, built by a learner"
         data-reveal
-        style="transition-delay: 100ms"
+        style="transition-delay: 90ms"
       >
         <p>
-          A builder learning with these tools created a caregiver-coordination
-          platform that simplifies complex care instructions and synchronizes
-          communication across multiple caregivers for one patient. It turns
-          overwhelming spreadsheets into a cohesive, human-centered system,
-          built entirely through regenmaxxing methods, start to finish.
+          Someone learning with these tools built a caregiver-coordination
+          surface: it turns overwhelming care instructions into one clear
+          system and keeps several caregivers for a single patient in sync.
+          Built from scratch, the regenmaxxing way.
         </p>
       </Card>
     </div>
   </Section>
 
   <!-- ROADMAP + REVEAL -->
-  <Section id="roadmap" title="Where this goes">
+  <Section id="roadmap" wide>
+    <h2 slot="heading">
+      Where this <span class="headline-italic">goes</span>
+    </h2>
     <div class="roadmap-grid">
       <div data-reveal>
-        <p class="prose">
-          The vision is clear: on-demand per-project agents, each trained on
-          community knowledge and ready to accelerate real-world building. Paired
-          with a transparent public ledger of what’s being created, this becomes
-          a self-sustaining ecosystem of regenerative innovation. Coming soon.
+        <p>
+          Per-project agents you can spin up on demand, each grounded in real
+          community knowledge, and a public record of what everyone is building.
+          Not promised, not dated, but the direction is set.
         </p>
       </div>
-      <div data-reveal style="transition-delay: 100ms">
+      <div data-reveal style="transition-delay: 90ms">
         <RevealTeaser />
       </div>
     </div>
   </Section>
 
+  <!-- CLOSING: resolve on the mission, not on "reveal soon" -->
+  <section class="closing">
+    <div class="closing-inner">
+      <h2>
+        Regenerating frontier tech to make life
+        <span class="headline-italic">more human</span>.
+      </h2>
+      <p class="closing-tag">slightly less degen. a lot more regen.</p>
+    </div>
+  </section>
+
   <!-- FOOTER -->
   <footer class="site-footer">
-    <div class="container footer-inner">
+    <div class="footer-inner">
       <div class="flex items-center gap-x-2.5">
         <img src="/logos/reggie.svg" alt="" width="28" height="28" class="h-7 w-7" />
         <span class="wordmark">Regen Accelerator</span>
       </div>
-      <p class="footer-tag">voiced by Reggie · Regenerating frontier tech to make life more human</p>
+      <p class="footer-tag">voiced by Reggie · regen/acc</p>
     </div>
   </footer>
 </Base>
 
 <script>
-  // The one motion layer beyond hover states: a restrained fade-up as
-  // [data-reveal] blocks (proof cards, the roadmap block) enter the
-  // viewport. Respects prefers-reduced-motion by revealing immediately.
+  // The one authored motion beyond hover: a restrained fade-up as [data-reveal]
+  // blocks enter the viewport. Respects prefers-reduced-motion by revealing
+  // immediately.
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const targets = document.querySelectorAll("[data-reveal]");
 
@@ -133,63 +161,79 @@ import RevealTeaser from "../components/RevealTeaser.astro";
 </script>
 
 <style>
+  /* HERO — the OG's compact, centered cluster. Constrained width is what kills
+     the void: the mushroom sits beside the promise, not across a chasm. */
   .hero {
-    padding-block: clamp(3.5rem, 9vh, 5.5rem) clamp(3rem, 7vh, 4.5rem);
+    max-width: var(--container-wide-2); /* OG hero grid: lg:max-w-3xl (48rem) */
+    margin-inline: auto;
+    padding-inline: 1.5rem;
+    padding-block: clamp(3rem, 8vh, 5rem) clamp(2.5rem, 6vh, 4rem);
   }
   .hero-grid {
     display: grid;
-    gap: 2.5rem;
+    gap: var(--space-block-gap);
     align-items: center;
+    justify-items: center;
+    text-align: center;
   }
   @media (min-width: 768px) {
     .hero-grid {
-      grid-template-columns: 1.3fr 1fr;
-      gap: 3.5rem;
+      grid-template-columns: 1.5fr 1fr;
+      gap: 2.5rem;
+      justify-items: start;
+      text-align: left;
     }
   }
   .hero h1 {
-    font-size: clamp(2.75rem, 7vw, 4.75rem);
-    margin: 0 0 1.5rem;
+    font-size: clamp(2.75rem, 6.5vw, 4rem);
+    margin: 0 0 1.25rem;
   }
-  .hero-art {
-    display: flex;
-    justify-content: center;
-  }
-  @media (min-width: 768px) {
-    .hero-art {
-      justify-content: flex-end;
-    }
-  }
-  .hero-art img {
-    width: clamp(180px, 22vw, 300px);
-    height: auto;
-    transition: transform 0.3s ease;
-  }
-  .hero-art img:hover {
-    transform: scale(0.94);
-  }
-  .lede {
-    font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+  .hero-lede {
+    font-size: clamp(1.1rem, 2vw, 1.35rem);
     color: var(--muted-foreground);
+    max-width: 36ch;
+    margin: 0;
   }
   .cta-row {
     display: flex;
     flex-wrap: wrap;
     gap: 0.75rem;
-    margin-top: 2rem;
+    margin-top: 1.75rem;
+    justify-content: center;
   }
+  @media (min-width: 768px) {
+    .cta-row {
+      justify-content: flex-start;
+    }
+  }
+  .hero-art {
+    display: flex;
+    justify-content: center;
+  }
+  .hero-art img {
+    width: clamp(9.375rem, 20vw, 13.75rem); /* 150px–220px, in rem */
+    height: auto;
+    transition: transform 0.3s ease;
+  }
+  .hero-art img:hover {
+    transform: scale(0.9); /* the OG signature: Reggie shrinks, not grows */
+  }
+
+  /* CASES — two red-outlined panels, zig-free two-up. */
   .card-grid {
     display: grid;
     gap: 1.25rem;
   }
-  @media (min-width: 800px) {
+  @media (min-width: 768px) {
     .card-grid {
       grid-template-columns: 1fr 1fr;
     }
   }
+
+  /* ROADMAP — prose beside the mycelial reveal. */
   .roadmap-grid {
     display: grid;
-    gap: 2rem;
+    gap: var(--space-block-gap);
     align-items: center;
   }
   @media (min-width: 900px) {
@@ -197,11 +241,38 @@ import RevealTeaser from "../components/RevealTeaser.astro";
       grid-template-columns: 1fr 1fr;
     }
   }
+
+  /* CLOSING — a centered statement that lands the page on the mission. */
+  .closing {
+    padding-block: clamp(3.5rem, 9vw, 6.5rem);
+    text-align: center;
+  }
+  .closing-inner {
+    max-width: var(--container-wide-2); /* was an unlinked 46rem */
+    margin-inline: auto;
+    padding-inline: 1.5rem;
+  }
+  .closing h2 {
+    font-size: clamp(2.25rem, 5vw, 3.25rem);
+    margin: 0;
+  }
+  .closing-tag {
+    margin: 1rem 0 0;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.06em;
+    color: var(--secondary);
+  }
+
+  /* FOOTER */
   .site-footer {
     padding-block: 3rem;
     border-top: 1px solid var(--border);
   }
   .footer-inner {
+    max-width: var(--container-outer); /* OG footer: max-w-7xl (80rem) */
+    margin-inline: auto;
+    padding-inline: 1.5rem;
     display: flex;
     flex-direction: column;
     gap: 0.75rem;

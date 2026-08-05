@@ -1,41 +1,58 @@
 ---
-// Section — the shared page-block wrapper. Vertical rhythm comes from the
-// global `.section` class (styles/global.css), so this and any hand-built
-// `<section class="section">` block share one rhythm scale.
+// Section — the shared page block, rebuilt to the OG regen.tips aura: a
+// narrow, centered column floating in generous side whitespace, with the
+// heading carried by an italic-emphasis span (a `heading` slot) rather than a
+// mono eyebrow. `wide` widens the column for two-up content (cases, roadmap).
 interface Props {
   id?: string;
-  kicker?: string;
   title?: string;
-  center?: boolean;
-  prose?: boolean;
+  wide?: boolean;
 }
-const { id, kicker, title, center = false, prose = false } = Astro.props;
+const { id, title, wide = false } = Astro.props;
 ---
 
-<section id={id} class="section">
-  <div class="container">
-    {kicker && <p class:list={["kicker", { "text-center": center }]}>{kicker}</p>}
-    {title && <h2 class:list={["section-title", { "text-center": center }]}>{title}</h2>}
-    <div class:list={["section-body", { prose, "mx-auto": center && prose }]}>
+<section id={id} class:list={["section", { wide }]}>
+  <div class="section-inner">
+    <slot name="heading">{title && <h2>{title}</h2>}</slot>
+    <div class="section-body">
       <slot />
     </div>
   </div>
 </section>
 
 <style>
-  .kicker {
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--secondary); /* Ultra Violet */
-    margin: 0 0 0.75rem;
+  .section-inner {
+    width: 100%;
+    max-width: var(--container-narrow); /* ~65ch reading column, centered like the OG */
+    margin-inline: auto;
+    padding-inline: var(--space-mobile-inset);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-block-gap);
   }
-  .section-title {
-    font-size: clamp(1.75rem, 4vw, 2.5rem);
-    margin: 0 0 1.5rem;
+  @media (min-width: 640px) {
+    .section-inner {
+      padding-inline: 1.5rem; /* OG sm:px-6 */
+    }
   }
-  .section-body.prose {
-    max-width: 68ch;
+  /* `wide` steps across breakpoints like the OG's two-up blocks — it never
+     sits at one fixed width. */
+  .section.wide .section-inner {
+    max-width: var(--container-wide-1);
+  }
+  @media (min-width: 1024px) {
+    .section.wide .section-inner {
+      max-width: var(--container-wide-2);
+    }
+  }
+  @media (min-width: 1280px) {
+    .section.wide .section-inner {
+      max-width: var(--container-wide-3);
+    }
+  }
+  .section-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-para-gap); /* OG paragraph rhythm gap-y-4 */
   }
 </style>
