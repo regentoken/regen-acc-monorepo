@@ -4,11 +4,15 @@ interface Props {
   kicker?: string;
   title?: string;
   class?: string;
+  [attr: string]: unknown;
 }
-const { kicker, title, class: cls = "" } = Astro.props;
+const { kicker, title, class: cls = "", ...rest } = Astro.props;
 ---
 
-<article class={`rounded-lg border border-border bg-card p-6 shadow-sm md:p-8 ${cls}`}>
+<article
+  class={`rounded-lg border border-border bg-card p-6 shadow-sm transition-[transform,box-shadow] duration-300 ease-out hover:-translate-y-1 hover:shadow-md md:p-8 ${cls}`}
+  {...rest}
+>
   {kicker && <p class="card-kicker">{kicker}</p>}
   {title && <h3 class="mt-1 mb-3 text-3xl">{title}</h3>}
   <div class="text-card-foreground/85 leading-relaxed">

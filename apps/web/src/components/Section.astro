@@ -1,27 +1,28 @@
 ---
+// Section — the shared page-block wrapper. Vertical rhythm comes from the
+// global `.section` class (styles/global.css), so this and any hand-built
+// `<section class="section">` block share one rhythm scale.
 interface Props {
   id?: string;
   kicker?: string;
   title?: string;
+  center?: boolean;
+  prose?: boolean;
 }
-const { id, kicker, title } = Astro.props;
+const { id, kicker, title, center = false, prose = false } = Astro.props;
 ---
 
 <section id={id} class="section">
   <div class="container">
-    {kicker && <p class="kicker">{kicker}</p>}
-    {title && <h2 class="section-title">{title}</h2>}
-    <div class="section-body">
+    {kicker && <p class:list={["kicker", { "text-center": center }]}>{kicker}</p>}
+    {title && <h2 class:list={["section-title", { "text-center": center }]}>{title}</h2>}
+    <div class:list={["section-body", { prose, "mx-auto": center && prose }]}>
       <slot />
     </div>
   </div>
 </section>
 
 <style>
-  .section {
-    padding-block: 6rem;
-    border-top: 1px solid var(--border);
-  }
   .kicker {
     font-family: var(--font-mono);
     font-size: 0.75rem;
@@ -34,7 +35,7 @@ const { id, kicker, title } = Astro.props;
     font-size: clamp(1.75rem, 4vw, 2.5rem);
     margin: 0 0 1.5rem;
   }
-  .section-body {
+  .section-body.prose {
     max-width: 68ch;
   }
 </style>
