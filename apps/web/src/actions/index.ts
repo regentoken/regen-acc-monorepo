@@ -5,6 +5,7 @@ import { z } from "astro:schema";
 import { db } from "../db/client";
 import { inviteCodes, rateLimitHits, submissions } from "../db/schema";
 import { isAdminAuthed } from "../lib/admin-auth";
+import { scoreIdea } from "../lib/scoring";
 
 function assertAdmin(context: ActionAPIContext) {
   // Defense in depth: the admin page itself redirects unauthenticated
@@ -151,9 +152,6 @@ export const server = {
   }),
 
   admin: {
-    // Approve & Score lives in RGA-012 (blocked on Nebius Token Factory
-    // credentials + the scoring rubric — not built yet). Reject is
-    // self-contained and doesn't depend on either.
     reject: defineAction({
       accept: "form",
       input: z.object({ submissionId: z.string().uuid() }),
@@ -163,6 +161,64 @@ export const server = {
           .update(submissions)
           .set({ status: "archived" })
           .where(eq(submissions.id, input.submissionId));
+        return { ok: true };
+      },
+    }),
+
+    // RGA-012: manual-approval scoring. Scoring is a real, billed LLM call,
+    // so this is deliberately admin-triggered per submission — never a queue
+    // or background worker (hard product requirement). On any failure
+    // (network, API, malformed LLM response) the submissions row must be
+    // left untouched — score stays NULL and status stays "pending" — so the
+    // admin can safely retry from the same page.
+    approve: defineAction({
+      accept: "form",
+      input: z.object({ submissionId: z.string().uuid() }),
+      handler: async (input, context) => {
+        assertAdmin(context);
+
+        const [submission] = await db
+          .select()
+          .from(submissions)
+          .where(eq(submissions.id, input.submissionId));
+
+        if (!submission) {
+          throw new ActionError({ code: "NOT_FOUND", message: "Submission not found." });
+        }
+
+        if (submission.type !== "idea") {
+          throw new ActionError({
+            code: "BAD_REQUEST",
+            message: "Only idea submissions can be scored.",
+          });
+        }
+
+        let result;
+        try {
+          result = await scoreIdea({
+            description: submission.description,
+            proofUrl: submission.proofUrl,
+          });
+        } catch (err) {
+          const message = err instanceof Error ? err.message : String(err);
+          throw new ActionError({
+            code: "INTERNAL_SERVER_ERROR",
+            message: `Scoring failed: ${message}. The submission is unchanged — try again.`,
+          });
+        }
+
+        await db
+          .update(submissions)
+          .set({
+            score: result.score,
+            scoreRationale: result.rationale,
+            scoreModel: process.env.NEBIUS_MODEL,
+            scorePromptVersion: "v1",
+            scoredAt: new Date(),
+            status: "scored",
+          })
+          .where(eq(submissions.id, input.submissionId));
+
         return { ok: true };
       },
     }),

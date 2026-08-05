@@ -4,12 +4,12 @@
     "build": {
       "dependsOn": ["^build"],
       "outputs": ["dist/**"],
-      "env": ["DATABASE_URL"]
+      "env": ["DATABASE_URL", "NEBIUS_API_KEY", "NEBIUS_BASE_URL", "NEBIUS_MODEL"]
     },
     "dev": {
       "cache": false,
       "persistent": true,
-      "env": ["DATABASE_URL"]
+      "env": ["DATABASE_URL", "NEBIUS_API_KEY", "NEBIUS_BASE_URL", "NEBIUS_MODEL"]
     },
     "typecheck": {
       "dependsOn": ["^build"]

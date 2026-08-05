@@ -11,6 +11,7 @@ if (!isAdminAuthed(Astro.cookies)) {
 }
 
 const rejectResult = Astro.getActionResult(actions.admin.reject);
+const approveResult = Astro.getActionResult(actions.admin.approve);
 
 const pending = await db
   .select()
@@ -29,6 +30,7 @@ const pending = await db
     </header>
 
     {rejectResult?.error && <p class="admin-error">{rejectResult.error.message}</p>}
+    {approveResult?.error && <p class="admin-error">{approveResult.error.message}</p>}
 
     {pending.length === 0 && <p class="empty-state">Nothing pending.</p>}
 
@@ -64,9 +66,14 @@ const pending = await db
               )}
             </dl>
             <div class="submission-actions">
-              <button type="button" class="approve-btn" disabled title="Nebius Token Factory scoring not wired yet (RGA-012)">
-                Approve & Score
-              </button>
+              {s.type === "idea" && (
+                <form method="POST" action={actions.admin.approve}>
+                  <input type="hidden" name="submissionId" value={s.id} />
+                  <button type="submit" class="approve-btn">
+                    Approve & Score
+                  </button>
+                </form>
+              )}
               <form method="POST" action={actions.admin.reject}>
                 <input type="hidden" name="submissionId" value={s.id} />
                 <button type="submit" class="reject-btn">
@@ -166,11 +173,8 @@ const pending = await db
     cursor: pointer;
   }
   .approve-btn {
-    background: var(--muted);
-    color: var(--muted-foreground);
-  }
-  .approve-btn:disabled {
-    cursor: not-allowed;
+    background: var(--primary);
+    color: var(--primary-foreground);
   }
   .reject-btn {
     background: transparent;
