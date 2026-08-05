@@ -1,24 +1,28 @@
 ---
 import Base from "../layouts/Base.astro";
 import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.astro";
 import Section from "../components/Section.astro";
-import Card from "../components/Card.astro";
 import Button from "../components/Button.astro";
 import RevealTeaser from "../components/RevealTeaser.astro";
+import RevealScript from "../components/RevealScript.astro";
+import CtaForm from "../components/CtaForm.astro";
 
-// Request for Regens — the first Regen Accelerator artifact. Its job is to
-// lock the design system (extracted from the OG regen.tips work) and stand as
-// one complete, on-brand thing. Aura rules, from the OG: compact centered
-// clusters, narrow reading columns, whitespace rhythm (no dividers), red-
-// outlined panels, italic-emphasis headings, one accent that acts.
+// Request for Regens — the ask itself, RFP/RFS-styled (v2 pivot, 2026-08-05).
+// Three doors, not one form: submit an idea, join the mentoring community, or
+// become a sponsor. Mentoring and sponsorship stay low-friction; submitting an
+// idea carries real friction (an invite code) because it costs real founder
+// attention. Proof and the full founder narrative live on /about, not here.
 // Constraints: no capital/funding/grants/investment; no NDA names; no Token
-// Dad; no em-dash in copy. Primary user: founders who need help shipping.
+// Dad; no em-dash in copy. Aura rules from the OG: compact centered clusters,
+// narrow reading columns, whitespace rhythm (no dividers), red-outlined
+// panels, italic-emphasis headings, one accent that acts.
 ---
 
 <Base title="Request for Regens: Regen Accelerator">
   <Navbar />
 
-  <!-- HERO: compact centered cluster, promise left, Reggie right -->
+  <!-- HERO: compact centered cluster, the ask stated plainly -->
   <header class="hero">
     <div class="hero-grid">
       <div class="hero-copy">
@@ -26,12 +30,13 @@ import RevealTeaser from "../components/RevealTeaser.astro";
           Request for <span class="headline-italic">Regens</span>
         </h1>
         <p class="hero-lede">
-          Learn to build regeneration with AI. Real tools, real guidance, and a
-          public record of what actually ships.
+          I am one founder who cannot help every builder alone, so here is the
+          actual ask: submit an idea, join the mentoring community, or help
+          the tools and time go further.
         </p>
         <div class="cta-row">
-          <Button href="#cases" size="lg">See the proof</Button>
-          <Button href="#what" size="lg" variant="outline">How it works</Button>
+          <Button href="#submit" size="lg">Submit an idea</Button>
+          <Button href="/about" size="lg" variant="outline">Read the story</Button>
         </div>
       </div>
       <div class="hero-art">
@@ -45,52 +50,69 @@ import RevealTeaser from "../components/RevealTeaser.astro";
     </div>
   </header>
 
-  <!-- WHAT THIS IS -->
-  <Section id="what">
+  <!-- WHY: the founder-voiced framing for three doors, not one form -->
+  <Section id="why">
     <h2 slot="heading">
-      A <span class="headline-italic">learning surface</span>, not an application form
+      Why I'm asking for <span class="headline-italic">regens</span>
     </h2>
     <p>
-      Learn by doing, in the open. The tools, the process, the decisions that
-      actually move a build, shown on real work instead of slides. No forms, no
-      waiting list.
-    </p>
-    <p>
-      You learn the way the strongest builders now work: regenmaxxing, using AI
-      aggressively and pointing it at what makes life more human.
+      There are more builders who need real help than I have hours in a day.
+      So this page is the actual ask, not a mission statement: three doors,
+      each proportional to what it costs me. Mentoring and sponsorship stay
+      low friction. Submitting an idea gets my real attention, so it asks a
+      little more of you too.
     </p>
   </Section>
 
-  <!-- CASES -->
-  <Section id="cases" wide>
+  <!-- ASK 1: submit an idea (the scored assessment IS the submission) -->
+  <Section id="submit">
     <h2 slot="heading">
-      Real builds, <span class="headline-italic">already shipped</span>
+      How <span class="headline-italic">regen</span> is your idea
     </h2>
-    <div class="card-grid">
-      <Card title="DNAI, a builder agent that ships" data-reveal style="transition-delay: 0ms">
-        <p>
-          DNAI is an AI agent that designs and ships real software for
-          regenerative work. It has produced public artifacts other teams rely
-          on, and its method is written up in a peer-reviewed preprint (<a
-            href="https://doi.org/10.55277/researchhub.eoe1iia0.1"
-            target="_blank"
-            rel="noopener noreferrer">DOI 10.55277/researchhub.eoe1iia0.1</a
-          >). Proof that a well-guided agent can do real, verifiable work.
-        </p>
-      </Card>
-      <Card
-        title="A caregiver surface, built by a learner"
-        data-reveal
-        style="transition-delay: 90ms"
-      >
-        <p>
-          Someone learning with these tools built a caregiver-coordination
-          surface: it turns overwhelming care instructions into one clear
-          system and keeps several caregivers for a single patient in sync.
-          Built from scratch, the regenmaxxing way.
-        </p>
-      </Card>
-    </div>
+    <p>
+      Tell me what you are building and why it matters. I read every
+      submission myself and score it, Reggie-voiced. This door needs an
+      invite code, since it is the one that costs me real time to open.
+    </p>
+    <CtaForm
+      type="idea"
+      descriptionLabel="What are you building, and why does it matter?"
+      descriptionPlaceholder="regenmaxxing an idea into something real..."
+      submitLabel="Submit your idea"
+    />
+  </Section>
+
+  <!-- ASK 2: join the mentoring community -->
+  <Section id="mentor">
+    <h2 slot="heading">
+      Join the <span class="headline-italic">mentoring</span> community
+    </h2>
+    <p>
+      Low friction, high upside. Tell me who you are and what kind of help
+      you are looking for, and you are in the network.
+    </p>
+    <CtaForm
+      type="mentorship"
+      descriptionLabel="What kind of mentoring are you looking for?"
+      submitLabel="Join the community"
+    />
+  </Section>
+
+  <!-- ASK 3: become a sponsor. Pitch artifact, not a claim anyone signed. -->
+  <Section id="sponsor">
+    <h2 slot="heading">
+      Become a <span class="headline-italic">sponsor</span>
+    </h2>
+    <p>
+      This is the pitch, not a claim anyone has signed on to yet. If you have
+      tools, credits, or amplification to put behind builders doing real
+      work, tell me what you have in mind.
+    </p>
+    <CtaForm
+      type="sponsorship"
+      descriptionLabel="What would you like to sponsor, and how?"
+      submitLabel="Start the conversation"
+    />
   </Section>
 
   <!-- ROADMAP + REVEAL -->
@@ -123,42 +145,10 @@ import RevealTeaser from "../components/RevealTeaser.astro";
     </div>
   </section>
 
-  <!-- FOOTER -->
-  <footer class="site-footer">
-    <div class="footer-inner">
-      <div class="flex items-center gap-x-2.5">
-        <img src="/logos/reggie.svg" alt="" width="28" height="28" class="h-7 w-7" />
-        <span class="wordmark">Regen Accelerator</span>
-      </div>
-      <p class="footer-tag">voiced by Reggie · regen/acc</p>
-    </div>
-  </footer>
+  <Footer />
 </Base>
 
-<script>
-  // The one authored motion beyond hover: a restrained fade-up as [data-reveal]
-  // blocks enter the viewport. Respects prefers-reduced-motion by revealing
-  // immediately.
-  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const targets = document.querySelectorAll("[data-reveal]");
-
-  if (reduceMotion) {
-    targets.forEach((el) => el.classList.add("is-visible"));
-  } else {
-    const io = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("is-visible");
-            io.unobserve(entry.target);
-          }
-        }
-      },
-      { threshold: 0.15, rootMargin: "0px 0px -10% 0px" },
-    );
-    targets.forEach((el) => io.observe(el));
-  }
-</script>
+<RevealScript />
 
 <style>
   /* HERO — the OG's compact, centered cluster. Constrained width is what kills
@@ -219,17 +209,6 @@ import RevealTeaser from "../components/RevealTeaser.astro";
     transform: scale(0.9); /* the OG signature: Reggie shrinks, not grows */
   }
 
-  /* CASES — two red-outlined panels, zig-free two-up. */
-  .card-grid {
-    display: grid;
-    gap: 1.25rem;
-  }
-  @media (min-width: 768px) {
-    .card-grid {
-      grid-template-columns: 1fr 1fr;
-    }
-  }
-
   /* ROADMAP — prose beside the mycelial reveal. */
   .roadmap-grid {
     display: grid;
@@ -262,38 +241,5 @@ import RevealTeaser from "../components/RevealTeaser.astro";
     font-size: 0.8rem;
     letter-spacing: 0.06em;
     color: var(--secondary);
-  }
-
-  /* FOOTER */
-  .site-footer {
-    padding-block: 3rem;
-    border-top: 1px solid var(--border);
-  }
-  .footer-inner {
-    max-width: var(--container-outer); /* OG footer: max-w-7xl (80rem) */
-    margin-inline: auto;
-    padding-inline: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    align-items: flex-start;
-  }
-  @media (min-width: 700px) {
-    .footer-inner {
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
-    }
-  }
-  .wordmark {
-    font-family: var(--font-headline);
-    font-weight: 600;
-    font-size: 1.15rem;
-  }
-  .footer-tag {
-    font-family: var(--font-mono);
-    font-size: 0.78rem;
-    color: var(--muted-foreground);
-    margin: 0;
   }
 </style>

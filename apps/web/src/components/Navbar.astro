@@ -1,12 +1,18 @@
 ---
 // Navbar — the OG regen.tips bar: an 80px header (h-20), the mushroom mark at
-// OG scale next to the ivypresto wordmark, and quiet anchor links that turn
+// OG scale next to the regen/acc wordmark, and quiet anchor links that turn
 // Munsell Red on hover. No CTA button: the hero owns the call, and the OG's
 // right slot was a wallet action we don't carry here.
+//
+// Absolute hrefs (not bare `#anchor`) so the nav resolves the same from
+// /about as it does from the homepage.
+import Wordmark from "./Wordmark.astro";
+
 const NAV = [
-  { label: "what", href: "#what" },
-  { label: "proof", href: "#cases" },
-  { label: "roadmap", href: "#roadmap" },
+  { label: "idea", href: "/#submit" },
+  { label: "mentor", href: "/#mentor" },
+  { label: "sponsor", href: "/#sponsor" },
+  { label: "about", href: "/about" },
 ];
 ---
 
@@ -20,7 +26,7 @@ const NAV = [
         height="48"
         class="h-12 w-12 transition duration-300 ease-in-out group-hover:scale-90"
       />
-      <span class="wordmark text-xl font-semibold tracking-tight">Regen Accelerator</span>
+      <Wordmark class="text-xl font-semibold tracking-tight" />
     </a>
 
     <nav class="hidden items-center gap-8 md:flex">
@@ -36,10 +42,6 @@ const NAV = [
 </header>
 
 <style>
-  .wordmark {
-    font-family: var(--font-headline); /* ivypresto */
-    color: var(--foreground);
-  }
   .nav-link {
     color: var(--foreground);
     transition: color 0.15s ease;

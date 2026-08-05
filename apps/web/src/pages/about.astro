@@ -1,0 +1,153 @@
+---
+import Base from "../layouts/Base.astro";
+import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.astro";
+import Section from "../components/Section.astro";
+import Card from "../components/Card.astro";
+import RevealScript from "../components/RevealScript.astro";
+
+// About — motivation and proof (v2 pivot, 2026-08-05). Leads with the
+// founder's own story (generic time-scarcity framing, no clinical/NDA
+// specifics, confirmed boundary), then DNAI and the caregiver-coordination
+// case as supporting evidence underneath, not the headline. See PRODUCT.md
+// "Evidence on Hand" and docs/v2-request-for-regens/architecture.md.
+---
+
+<Base
+  title="About: Regen Accelerator"
+  description="One founder, a mentor network, and the proof behind the ask."
+>
+  <Navbar />
+
+  <header class="about-hero">
+    <div class="about-hero-inner">
+      <h1>
+        One founder, not enough <span class="headline-italic">hours</span>
+      </h1>
+    </div>
+  </header>
+
+  <!-- FOUNDER STORY: the lead proof, generic time-scarcity only -->
+  <Section id="founder">
+    <p>
+      I am one person building this alone, with more builders who need real
+      help than I have hours in a day. That is the honest starting point for
+      Regen Accelerator: not a company with an application team, just a
+      founder who kept getting asked the same question by people trying to
+      ship, and decided to make the answer scale a little further than one
+      inbox.
+    </p>
+    <p>
+      So the ask on this site is literal. Submit an idea, join the mentoring
+      community, or help me make the tools and time go further. What you get
+      back is real: my mentor network, real tooling, and a public record of
+      what actually gets built. Never capital. Always leverage.
+    </p>
+  </Section>
+
+  <!-- PROOF: real, consented, public-safe cases only -->
+  <Section id="proof" wide>
+    <h2 slot="heading">
+      Proof, not <span class="headline-italic">promises</span>
+    </h2>
+    <div class="card-grid">
+      <Card title="DNAI, a builder agent that ships" data-reveal style="transition-delay: 0ms">
+        <p>
+          DNAI is an AI agent that designs and ships real software for
+          regenerative work. It has produced public artifacts other teams rely
+          on, and its method is written up in a peer-reviewed preprint (<a
+            href="https://doi.org/10.55277/researchhub.eoe1iia0.1"
+            target="_blank"
+            rel="noopener noreferrer">DOI 10.55277/researchhub.eoe1iia0.1</a
+          >). Proof that a well-guided agent can do real, verifiable work.
+        </p>
+      </Card>
+      <Card
+        title="A caregiver surface, built by a learner"
+        data-reveal
+        style="transition-delay: 90ms"
+      >
+        <p>
+          Someone learning with these tools built a caregiver-coordination
+          surface: it turns overwhelming care instructions into one clear
+          system and keeps several caregivers for a single patient in sync.
+          Built from scratch, the regenmaxxing way.
+        </p>
+      </Card>
+    </div>
+  </Section>
+
+  <!-- CLOSING: point back to the ask -->
+  <section class="closing">
+    <div class="closing-inner">
+      <h2>
+        Ready to <span class="headline-italic">start</span>?
+      </h2>
+      <div class="closing-links">
+        <a href="/#submit">submit an idea</a>
+        <a href="/#mentor">join mentoring</a>
+        <a href="/#sponsor">become a sponsor</a>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</Base>
+
+<RevealScript />
+
+<style>
+  .about-hero {
+    max-width: var(--container-wide-2);
+    margin-inline: auto;
+    padding-inline: 1.5rem;
+    padding-block: clamp(3rem, 8vh, 5rem) clamp(1.5rem, 4vh, 2.5rem);
+  }
+  .about-hero-inner {
+    text-align: center;
+  }
+  .about-hero h1 {
+    font-size: clamp(2.5rem, 6vw, 3.5rem);
+    margin: 0;
+  }
+
+  .card-grid {
+    display: grid;
+    gap: 1.25rem;
+  }
+  @media (min-width: 768px) {
+    .card-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .closing {
+    padding-block: clamp(3.5rem, 9vw, 6.5rem);
+    text-align: center;
+  }
+  .closing-inner {
+    max-width: var(--container-wide-2);
+    margin-inline: auto;
+    padding-inline: 1.5rem;
+  }
+  .closing h2 {
+    font-size: clamp(2.25rem, 5vw, 3.25rem);
+    margin: 0;
+  }
+  .closing-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem 1.5rem;
+    margin-top: 1.25rem;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    letter-spacing: 0.02em;
+  }
+  .closing-links a {
+    color: var(--secondary);
+  }
+  .closing-links a:hover {
+    color: var(--primary);
+  }
+</style>

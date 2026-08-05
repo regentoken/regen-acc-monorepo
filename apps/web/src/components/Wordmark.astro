@@ -1,0 +1,26 @@
+---
+// The regen/acc wordmark, locked 2026-08-05 (docs/design-system-and-brand/brand.md):
+// "regen" plain, "/" in Munsell Red, "acc" italic. Renders wherever the
+// wordmark appears: navbar, footer, hero.
+interface Props {
+  class?: string;
+}
+const { class: cls = "" } = Astro.props;
+---
+
+<span class={`wordmark ${cls}`}
+  >regen<span class="wordmark-slash">/</span><span class="wordmark-acc">acc</span></span
+>
+
+<style>
+  .wordmark {
+    font-family: var(--font-headline);
+    color: var(--foreground);
+  }
+  .wordmark-slash {
+    color: var(--primary);
+  }
+  .wordmark-acc {
+    font-style: italic;
+  }
+</style>

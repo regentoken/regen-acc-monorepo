@@ -9,13 +9,22 @@ interface Props {
 }
 
 const { type, descriptionLabel, descriptionPlaceholder, submitLabel } = Astro.props;
-const result = Astro.getActionResult(actions.submit);
+
+// One named action per type, not a shared "submit" action — Astro scopes
+// getActionResult() by action name, so this keeps a result on one CtaForm
+// instance from also rendering as "success" on the other two forms sharing
+// the page (they'd otherwise all read the same global action result).
+const actionByType = {
+  idea: actions.submitIdea,
+  mentorship: actions.submitMentorship,
+  sponsorship: actions.submitSponsorship,
+} as const;
+const action = actionByType[type];
+const result = Astro.getActionResult(action);
 const formId = `cta-form-${type}`;
 ---
 
-<form id={formId} class="cta-form" method="POST" action={actions.submit}>
-  <input type="hidden" name="type" value={type} />
-
+<form id={formId} class="cta-form" method="POST" action={action}>
   <!-- Honeypot: hidden from sighted users, left blank by them; bots that
        autofill every field trip it and get a silent success (see the
        action handler). -->
