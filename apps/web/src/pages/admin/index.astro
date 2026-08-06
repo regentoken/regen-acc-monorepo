@@ -24,9 +24,12 @@ const pending = await db
   <main class="admin-page">
     <header class="admin-header">
       <h1>Pending submissions</h1>
-      <form method="POST" action="/admin/logout">
-        <button type="submit" class="logout-btn">Log out</button>
-      </form>
+      <div class="admin-header-actions">
+        <a href="/admin/codes" class="codes-link">Invite codes</a>
+        <form method="POST" action="/admin/logout">
+          <button type="submit" class="logout-btn">Log out</button>
+        </form>
+      </div>
     </header>
 
     {rejectResult?.error && <p class="admin-error">{rejectResult.error.message}</p>}
@@ -103,6 +106,18 @@ const pending = await db
   .admin-header h1 {
     font-size: 1.75rem;
     margin: 0;
+  }
+  .admin-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .codes-link {
+    font-size: 0.85rem;
+    color: var(--secondary);
+  }
+  .codes-link:hover {
+    color: var(--primary);
   }
   .logout-btn {
     border: 1.5px solid var(--border);

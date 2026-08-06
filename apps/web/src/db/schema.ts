@@ -14,6 +14,13 @@ export const submissionStatus = pgEnum("submission_status", [
 export const inviteCodes = pgTable("invite_codes", {
   id: uuid("id").primaryKey().defaultRandom(),
   codeHash: text("code_hash").notNull().unique(),
+  // Plaintext, admin-visible copy of the code. Redemption itself only ever
+  // checks codeHash (see submitIdea's handler) -- this column exists purely
+  // so Mel can see which code to hand out to whom in the admin dashboard.
+  // A deliberate, scoped exception to "hashed, never stored plaintext":
+  // these are single-use, idea-submission-gate tokens, not passwords, and
+  // the person issuing them needs to read them back.
+  code: text("code"),
   issuedBy: text("issued_by").notNull(),
   usesRemaining: integer("uses_remaining").notNull().default(1),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),

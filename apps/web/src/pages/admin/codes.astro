@@ -1,0 +1,99 @@
+---
+import Base from "../../layouts/Base.astro";
+import { isAdminAuthed } from "../../lib/admin-auth";
+import { db } from "../../db/client";
+import { inviteCodes } from "../../db/schema";
+
+if (!isAdminAuthed(Astro.cookies)) {
+  return Astro.redirect("/admin/login");
+}
+
+const codes = await db.select().from(inviteCodes).orderBy(inviteCodes.createdAt);
+---
+
+<Base title="Invite codes: Regen Accelerator">
+  <main class="admin-page">
+    <header class="admin-header">
+      <h1>Invite codes</h1>
+      <a href="/admin" class="back-link">Back to submissions</a>
+    </header>
+
+    {codes.length === 0 && <p class="empty-state">No invite codes yet.</p>}
+
+    <table class="codes-table">
+      <thead>
+        <tr>
+          <th>Code</th>
+          <th>Issued by</th>
+          <th>Uses left</th>
+          <th>Created</th>
+        </tr>
+      </thead>
+      <tbody>
+        {
+          codes.map((c) => (
+            <tr class:list={{ "used-up": c.usesRemaining <= 0 }}>
+              <td class="code-cell">{c.code ?? "(no plaintext on file)"}</td>
+              <td>{c.issuedBy}</td>
+              <td>{c.usesRemaining}</td>
+              <td>{c.createdAt.toISOString().slice(0, 10)}</td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </main>
+</Base>
+
+<style>
+  .admin-page {
+    max-width: var(--container-wide-2);
+    margin-inline: auto;
+    padding: 2.5rem 1.5rem 4rem;
+  }
+  .admin-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+  }
+  .admin-header h1 {
+    font-size: 1.75rem;
+    margin: 0;
+  }
+  .back-link {
+    font-size: 0.85rem;
+    color: var(--secondary);
+  }
+  .back-link:hover {
+    color: var(--primary);
+  }
+  .empty-state {
+    color: var(--muted-foreground);
+  }
+  .codes-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+  .codes-table th {
+    text-align: left;
+    font-weight: 600;
+    padding: 0.5rem 0.75rem;
+    border-bottom: 2px solid var(--border);
+    color: var(--secondary);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .codes-table td {
+    padding: 0.6rem 0.75rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .code-cell {
+    font-family: var(--font-mono);
+  }
+  .codes-table tr.used-up {
+    opacity: 0.45;
+  }
+</style>
